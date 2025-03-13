@@ -18,10 +18,26 @@ con.connect((err) => {
   console.log("Connected!");
 });
 
+app.post('/classe', (req, res) => {
+  const classe = req.body.classe;
+
+  var query = "INSERT INTO classe (sezione) VALUES (?)";
+
+  con.query(query, [classe], (err, result) => {
+    if(err){
+      console.log(`errore nell'inserimento della classe ${err.message}`);
+      res.status(500).send({message:`Errore interno del server`});
+      return;
+    }
+    console.log(`inserita classe ${classe}`);
+    res.status(201).send({message:`Classe ${classe} aggiunta`});
+  });
+});
+
 app.get('/classe/:classe', (req, res) => {
   const classe = req.params.classe;
 
-  var query = "INSERT INTO classe (sezione) VALUES (?)";
+  var query = "SELECT * FROM studente s join classe c on s.fkclasse==c.id";
 
   con.query(query, [classe], (err, result) => {
     if(err){
