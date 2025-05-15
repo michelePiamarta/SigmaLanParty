@@ -18,38 +18,40 @@ con.connect((err) => {
   console.log("Connected!");
 });
 
-app.post('/classe', (req, res) => {
-  const classe = req.body.classe;
+app.post('/studente', (req, res) => {
+  console.log(req)
+  const username = req.body.username;
+  const punteggio = req.body.punteggio;
+  const sezione = req.body.sezione;
 
-  var query = "INSERT INTO classe (sezione) VALUES (?)";
+  var query = "INSERT INTO studenti (username,punteggio,sezione) VALUES (?,?,?)";
 
-  con.query(query, [classe], (err, result) => {
+  con.query(query, [username,punteggio,sezione], (err, result) => {
     if(err){
-      console.log(`errore nell'inserimento della classe ${err.message}`);
+      console.log(`errore nell'inserimento dello studente ${err.message}`);
       res.status(500).send({message:`Errore interno del server`});
       return;
     }
-    console.log(`inserita classe ${classe}`);
-    res.status(201).send({message:`Classe ${classe} aggiunta`});
+    console.log(`studente inserito con successo`);
+    res.status(201).send({message:`studente ${username} aggiunta`});
   });
 });
 
-app.get('/classe/:classe', (req, res) => {
-  const classe = req.params.classe;
+app.get('/classeVincitrice', (req,res) => {
+  var query = "SELECT s.sezione,sum(s.punteggio) as punteggio FROM studenti s group by s.sezione order by punteggio";
 
-  var query = "SELECT * FROM studente s join classe c on s.fkclasse==c.id";
-
-  con.query(query, [classe], (err, result) => {
+  con.query(query, [], (err, result) => {
     if(err){
-      console.log(`errore nell'inserimento della classe ${err.message}`);
+      console.log(`errore nel calcolo della classifica ${err.message}`);
       res.status(500).send({message:`Errore interno del server`});
       return;
     }
-    console.log(`inserita classe ${classe}`);
-    res.status(201).send({message:`Classe ${classe} aggiunta`});
+    console.log(`classifica calcolata: ${result}`);
+    res.status(201).send(result);
   });
-});
+})
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+

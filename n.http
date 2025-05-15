@@ -1,0 +1,9 @@
+
+POST http://localhost:3000/studente HTTP/1.1
+content-type: application/json
+
+{
+    "username": "marino",
+    "punteggio": "0",
+    "sezione": "2b"
+}
