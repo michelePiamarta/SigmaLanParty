@@ -3,6 +3,8 @@ const mysql = require('mysql2');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 var con = mysql.createConnection({
   host: "mysql",
   user: "root",
@@ -18,8 +20,10 @@ con.connect((err) => {
   console.log("Connected!");
 });
 
+//nel caso di errori, controlla che nella header della richiesta ci sia il content-type application/json
 app.post('/studente', (req, res) => {
   console.log(req)
+  console.log(req.body)
   const username = req.body.username;
   const punteggio = req.body.punteggio;
   const sezione = req.body.sezione;
@@ -38,7 +42,7 @@ app.post('/studente', (req, res) => {
 });
 
 app.get('/classeVincitrice', (req,res) => {
-  var query = "SELECT s.sezione,sum(s.punteggio) as punteggio FROM studenti s group by s.sezione order by punteggio";
+  var query = "SELECT s.sezione,sum(s.punteggio) as punteggio FROM studenti s group by s.sezione order by sum(s.punteggio) desc";
 
   con.query(query, [], (err, result) => {
     if(err){
