@@ -31,8 +31,30 @@ h1 {
 #leaderboard li {
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
+  font-weight: bold;
 }
 
 #leaderboard li:last-child {
   border-bottom: none;
+}
+
+.first-place {
+  font-size: 1.8rem; /* Grande per il primo posto */
+  font-weight: bold;
+  color: gold;
+  /*background-color: #fff3cd;*/
+}
+
+.second-place {
+  font-size: 1.5rem; /* Medio per il secondo posto */
+  font-weight: bold;
+  color: silver;
+  /*background-color: #e9ecef;*/
+}
+
+.third-place {
+  font-size: 1.4rem; /* Leggermente più grande per il terzo posto */
+  font-weight: bold;
+  color: #cd7f32; /* Colore bronzo */
+  /*background-color: #f8d7da;*/
 }

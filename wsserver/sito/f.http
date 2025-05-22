@@ -1,0 +1,9 @@
+
+POST https://cautious-guide-j6j9xrvj46p2p96-3000.app.github.dev/studente HTTP/1.1
+content-type: application/json
+
+{
+    "username": "martino grezzo",
+    "punteggio": 10,
+    "sezione": "5a"
+}
